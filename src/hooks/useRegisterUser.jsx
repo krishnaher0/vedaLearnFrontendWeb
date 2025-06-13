@@ -1,33 +1,22 @@
-import { useState } from "react";
-import { registerUserService } from "../services/authServices";
- export const useRegisterUser=()=>{
-    const [isLoading,setIsLoading]=useState(false)
-    const [error,setError]=useState(null)
-    const [data,setData]=useState(null)
+import { useMutation } from '@tanstack/react-query'
+import React from 'react'
+import { toast } from 'react-toastify'
+import { registerUserService } from '../services/authServices'
 
-    const register=async (formData)=>{
-        //when user click event/button
-        setIsLoading(true)
-        setError(null)//clear state
-        setData(null)
 
-        try{
-            const response=await registerUserService(formData)
-            setData(response)
-            return response
-        }catch(err){
-            setError(err)
-            return null
-        }finally{
-            setIsLoading(false)
+const useRegisterUser = () => {
+  return useMutation(
+    {
+        mutationFn:registerUserService,
+        mutationKey:['register'],
+        onSuccess:(data)=>{
+            toast.success(data.message || "Registration successful")
+        },
+        onError:(err)=>{
+            toast.error(err.message ||"Registration failed")
         }
     }
-    return{
-        register,
-        isLoading,
-        data,
-        error
-    }
+  )
+}
 
-
- }
+export default useRegisterUser

@@ -1,3 +1,9 @@
 import axios from './api';
-export const registerUserApi=(data)=> axios.post("/auth/register",data)
-export const loginUserApi=(data)=> axios.post("/auth/login",data)
+export const registerUserApi=async(data)=>{
+    const response = await axios.post("/auth/register",data)
+    return response
+} 
+export const loginUserApi=async(data)=> {
+   const response=await axios.post("/auth/login",data)
+   return response
+}

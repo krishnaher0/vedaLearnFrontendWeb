@@ -1,4 +1,5 @@
 import { createContext,useState,useEffect } from "react";
+import React from 'react'
  export const AuthContext = createContext();
  const AuthContextProvider=({children})=>{
     const [user,setUser]=useState(null);
@@ -19,10 +20,10 @@ import { createContext,useState,useEffect } from "react";
     }
     useEffect(()=>{
         setLoading(true);
-        const user=JSON.parse(localStorage.getItem("user"));
+        const existingUser=JSON.parse(localStorage.getItem("user"));
         const token=localStorage.getItem("token");
-        if(token && user){
-            setUser(user);
+        if(token && existingUser){
+            setUser(existingUser);
        
     }else{
         logout();

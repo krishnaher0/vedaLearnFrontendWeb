@@ -1,7 +1,6 @@
-import React from 'react'
-import RegisterForm from '../components/RegisterForm.jsx'
-import RightSidePanel from '../components/RightImagePanel.jsx'
-import LoginForm from '../components/LoginForm.jsx'
+import React from "react";
+import RegisterForm from "../components/auth/RegisterForm.jsx";
+import RightSidePanel from "../components/RightImagePanel.jsx";
 
 export default function Register() {
   return (
@@ -9,7 +8,10 @@ export default function Register() {
       <RegisterForm />
 
       {/* Right Panel (Reusable) */}
-        <RightSidePanel title="Welcome to VedaLearn!" subtitle="Create an account to start your learning journey" />
+      <RightSidePanel
+        title="Welcome to VedaLearn!"
+        subtitle="Create an account to start your learning journey"
+      />
     </div>
-  )
+  );
 }

@@ -2,18 +2,23 @@ import { toast } from "react-toastify";
 import { loginUserService } from "../services/authServices";
 import {useMutation} from "@tanstack/react-query"
 import { useContext } from "react";
-import { AuthContext } from "../components/auth/AuthProvider";
+import { AuthContext } from "../auth/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 
 export const useLoginUser= ()=>{
     const {login}=useContext(AuthContext);
+    const navigate=useNavigate()
     return useMutation(
         {
             mutationFn:loginUserService,
             mutationKey:['login-key'],
             onSuccess:(data)=>{
+                console.log(data)
                 toast.success(data?.message || "Login success")
-                login(data?.user, data?.token);
+                login(data?.data, data?.token);
+                navigate("/dashboard")
+                
             },
             onError:(err)=>{
                 toast.error(err?.message || "Login Failed")

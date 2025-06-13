@@ -1,13 +1,32 @@
 import React, { useState } from "react";
+import useLoginUser from "../../hooks/useLoginUser";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { mutate, error, data, isPending, isError, isSuccess } = useLoginUser();
+  const validationSchema = Yup.object({
+    email: Yup.string().email("invalid email").required("Email is required"),
+    password: Yup.string()
+      .min(8, "minimum 8 characters required ")
+      .required("Password is required"),
+  });
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log("Logging in with:", { email, password });
-    // Add your login API logic here
+    validationSchema,
+    onSubmit: (values) => {
+      mutate(values);
+    },
+  });
+  const navigate = useNavigate();
+  const handleregister = (err) => {
+    err.preventDefault();
+    navigate("/register");
   };
 
   return (
@@ -21,19 +40,25 @@ const LoginForm = () => {
         free!
       </p>
 
-      <form onSubmit={handleLogin} className="w-full max-w-sm space-y-4">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="w-full max-w-sm space-y-4">
         <div>
           <label className="text-sm font-semibold text-blue-700">
             Input Your Email
           </label>
           <input
             type="email"
+            name="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             className="w-full px-4 py-2 border border-blue-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           />
+          {formik.touched.email && formik.errors.email && (
+            <div>{formik.errors.email}</div>
+          )}
         </div>
         <div>
           <label className="text-sm font-semibold text-blue-700">
@@ -41,12 +66,16 @@ const LoginForm = () => {
           </label>
           <input
             type="password"
+            name="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             className="w-full px-4 py-2 border border-blue-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           />
+          {formik.touched.password && formik.errors.password && (
+            <div>{formik.errors.password}</div>
+          )}
         </div>
 
         <button
@@ -62,6 +91,10 @@ const LoginForm = () => {
           <span className="text-xs">ⓖ</span>
         </button>
       </form>
+      <div>
+        Don't have an account?{" "}
+        <button onClick={handleregister}> Register</button>
+      </div>
     </div>
   );
 };
