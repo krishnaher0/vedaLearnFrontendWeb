@@ -6,9 +6,10 @@ import { AuthContext } from "../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 
+
 export const useLoginUser= ()=>{
-    const {login}=useContext(AuthContext);
-    const navigate=useNavigate()
+    const navigate=useNavigate();
+    const {login,role}=useContext(AuthContext);
     return useMutation(
         {
             mutationFn:loginUserService,
@@ -17,8 +18,10 @@ export const useLoginUser= ()=>{
                 console.log(data)
                 toast.success(data?.message || "Login success")
                 login(data?.data, data?.token);
-                navigate("/dashboard")
                 
+                if( role==="Admin" || role==="Teacher"){
+                    navigate("/admin/dashboard")
+                }
             },
             onError:(err)=>{
                 toast.error(err?.message || "Login Failed")

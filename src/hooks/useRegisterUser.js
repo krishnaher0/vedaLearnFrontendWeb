@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { registerUserService } from '../services/authServices'
 
 
-const useRegisterUser = () => {
+export default function useRegisterUser(){
   return useMutation(
     {
         mutationFn:registerUserService,
@@ -16,7 +16,5 @@ const useRegisterUser = () => {
             toast.error(err.message ||"Registration failed")
         }
     }
-  )
+  );
 }
-
-export default useRegisterUser
