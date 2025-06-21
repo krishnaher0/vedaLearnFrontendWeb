@@ -8,6 +8,7 @@ export const registerUserService= async(formData)=>{
     }
 }
 export const loginUserService=async (formData)=>{
+    console.log(formData)
     try{
         const response=await loginUserApi(formData)
         return response.data

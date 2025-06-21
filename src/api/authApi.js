@@ -4,6 +4,7 @@ export const registerUserApi=async(data)=>{
     return response
 } 
 export const loginUserApi=async(data)=> {
+    console.log(data)
    const response=await axios.post("/auth/login",data)
    return response
 }

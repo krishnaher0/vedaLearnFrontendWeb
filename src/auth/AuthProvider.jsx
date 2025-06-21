@@ -8,6 +8,8 @@ import React from 'react'
         setLoading(true);
         localStorage.setItem("user",JSON.stringify(userData));
         localStorage.setItem("token",token);
+        localStorage.setItem("role",role);
+        localStorage.setItem
         setUser(userData);
         setLoading(false);
     }
@@ -22,6 +24,7 @@ import React from 'react'
         setLoading(true);
         const existingUser=JSON.parse(localStorage.getItem("user"));
         const token=localStorage.getItem("token");
+
         if(token && existingUser){
             setUser(existingUser);
        
@@ -31,8 +34,9 @@ import React from 'react'
     setLoading(false);
 },
         []);
+        const role=user?.role;
     return(
-        <AuthContext.Provider value={{user,login,logout,isAuthenticated:user!==null}}>
+        <AuthContext.Provider value={{user,login,logout,role,isAuthenticated:user!==null}}>
             {children}
         </AuthContext.Provider>
     )

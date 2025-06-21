@@ -1,18 +1,49 @@
-import {  useQuery } from "@tanstack/react-query";
-// useQuery -> GET request states
-import { useState } from "react";
-import { getAllTeacherService } from "../../services/admin/TeacherService";
-export const useAdminTeacher = () => {
-  const query = useQuery({
-    queryKey: ["admin_users"],
-    queryFn:
-      getAllTeacherService
-   
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getAllTeacherService,
+  registerTeacherService,
+  updateTeacherService,
+  deleteTeacherService,
+} from "../../services/admin/TeacherService";
+
+
+export const useCreateTeacher = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (formData) => createTeacherService(formData),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin_users'] });
+    },
   });
-    return {
-    data: query.data,
-    isLoading: query.isLoading,
-    isError: query.isError,
-    error: query.error,
-  };
+};
+
+export const useAdminTeacher = () =>
+  useQuery({
+    queryKey: ["admin_users"],
+    queryFn: getAllTeacherService,
+  });
+
+export const useAddTeacher = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: registerTeacherService,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin_users"] }),
+  });
+};
+
+export const useUpdateTeacher = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ teacherId, formData }) =>
+      updateTeacherService(teacherId, formData),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin_users"] }),
+  });
+};
+
+export const useDeleteTeacher = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: deleteTeacherService,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin_users"] }),
+  });
 };
