@@ -1,6 +1,6 @@
 import axios from "../api"
 
-// services/admin/userService.js
+
 
 
 export const getAllUserApi = async ({ page, limit }) => {

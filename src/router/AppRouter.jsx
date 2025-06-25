@@ -36,15 +36,22 @@ export default function AppRouter() {
         </Route>
 
         <Route path="/admin" element={<DashboardContent />}>
-  <Route path="dashboard" element={<Dashboard />} /> // 
-  <Route path="student" element={<UserTable />} />
-  <Route path="teacher" element={<TeacherTable />} />
-  <Route path="courses" element={<Courses />} />
-  <Route path="reports" element={<Reports />} />
-  <Route path="feedback" element={<Feedback />} />
-  <Route path="settings" element={<Setting />} />
-</Route>
-
+          <Route path="dashboard" element={<Dashboard />} /> //
+          <Route path="student" element={<UserTable />} />
+          <Route path="teacher" element={<TeacherTable />} />
+          <Route path="courses" element={<Courses />} />
+          {/* <Route
+            path="/admin/courses/:courseId"
+            element={<CourseDetailsPage />}
+          />
+          <Route
+            path="/admin/lessons/:lessonId"
+            element={<LessonDetailsPage />}
+          /> */}
+          <Route path="reports" element={<Reports />} />
+          <Route path="feedback" element={<Feedback />} />
+          <Route path="settings" element={<Setting />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

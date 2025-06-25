@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import {
   getAllTeacherService,
   registerTeacherService,
@@ -7,21 +8,12 @@ import {
 } from "../../services/admin/TeacherService";
 
 
-export const useCreateTeacher = () => {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (formData) => createTeacherService(formData),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['admin_users'] });
-    },
-  });
-};
-
-export const useAdminTeacher = () =>
+export const useGetTeacher = () =>
   useQuery({
     queryKey: ["admin_users"],
     queryFn: getAllTeacherService,
   });
+
 
 export const useAddTeacher = () => {
   const qc = useQueryClient();

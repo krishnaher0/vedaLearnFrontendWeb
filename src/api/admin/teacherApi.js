@@ -1,6 +1,6 @@
 import axios from "../api"
 
-// services/admTeacherService.js
+
 
 
 export const getAllTeacherApi = async ({ page, limit }) => {
@@ -16,15 +16,16 @@ export const getAllTeacherApi = async ({ page, limit }) => {
   return response.data;
 };
 
-export const getOneTeacherApi = (id) => axios.get("/auth/register/teacher/" + id )
+export const getOneTeacherApi = (id) => axios.get("/admin/teacher/" + id )
 
 export const createOneTeacherApi = (formData) => {
   
 
   const token = localStorage.getItem("token");
-  return axios.post("/auth/register/teacher/", formData, {
+  return axios.post("/auths/register/teacher", formData, {
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data', 
       // DO NOT manually set 'Content-Type' — Axios will handle it
     },
   });
