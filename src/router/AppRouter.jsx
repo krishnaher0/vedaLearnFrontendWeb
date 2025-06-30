@@ -40,6 +40,7 @@ export default function AppRouter() {
           <Route path="student" element={<UserTable />} />
           <Route path="teacher" element={<TeacherTable />} />
           <Route path="courses" element={<Courses />} />
+           <Route path="/courses/:courseId/lessons" element={<Lessons />} />
           {/* <Route
             path="/admin/courses/:courseId"
             element={<CourseDetailsPage />}

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo/VedEx.png';
+import logo from '../assets/logo/vedlogo.png';
 import illustration from '../assets/images/illustration.png';
 import RightSidePanel from '../components/RightImagePanel';
 import { useNavigate } from 'react-router-dom';

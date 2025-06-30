@@ -1,6 +1,6 @@
 // Sidebar.js
 import React from "react";
-import logo from "../assets/logo/VedEx.png"
+import logo from "../assets/logo/vedlogo.png"
 import { NavLink } from "react-router-dom";
 import {
   FaTachometerAlt,
