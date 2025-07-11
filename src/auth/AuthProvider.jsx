@@ -1,15 +1,18 @@
 import { createContext,useState,useEffect } from "react";
 import React from 'react'
+
  export const AuthContext = createContext();
+
  const AuthContextProvider=({children})=>{
+     
     const [user,setUser]=useState(null);
     const [loading,setLoading]=useState(true);
     const login=(userData,token)=>{
         setLoading(true);
         localStorage.setItem("user",JSON.stringify(userData));
         localStorage.setItem("token",token);
-        localStorage.setItem("role",role);
-        localStorage.setItem
+        localStorage.setItem("role",userData.role);
+        
         setUser(userData);
         setLoading(false);
     }
@@ -17,8 +20,12 @@ import React from 'react'
         setLoading(true);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        localStorage.removeItem("role");
         setUser(null);
         setLoading(false);
+       
+       
+        
     }
     useEffect(()=>{
         setLoading(true);
