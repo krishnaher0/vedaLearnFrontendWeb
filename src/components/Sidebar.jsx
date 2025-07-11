@@ -1,7 +1,7 @@
 // Sidebar.js
 import React from "react";
 import logo from "../assets/logo/vedlogo.png"
-import { NavLink } from "react-router-dom";
+
 import {
   FaTachometerAlt,
   FaBook,
@@ -24,12 +24,12 @@ function Sidebar() {
  
   return (
     <div className="w-64 bg-white shadow-lg p-5">
-      <div className="flex flex-col items-center pb-5 mb-5 border-b border-gray-200">
+      <div className="flex flex-col items-center pb-5 mb-5 ml-9 border-b border-gray-200">
         <img
-          src={logo}
-          alt="LinguaLearn Logo"
-          className="w-20 h-10 mr-3"
-        />
+              src={logo}
+              alt="VedLingo"
+              className=" fixed top-1 left-4 w-[60px] h-auto z-[100]"
+            />
         <div className="text-l font-semibold text-gray-800">
           Admin Dashboard
         </div>
