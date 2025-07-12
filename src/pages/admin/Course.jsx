@@ -1,5 +1,6 @@
 // src/pages/CoursesPage.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   useAddCourse,
   useDeleteCourse,
@@ -7,10 +8,16 @@ import {
   useGetCourses,
 } from "../../hooks/admin/useAdminCourse";
 import DeleteModal from "../../components/DeleteModal";
+import CourseTable from "../../components/CourseTable";
+import CourseCards from "../../components/CourseCards";
 
-import CourseForm from "../../components/auth/CourseForm"; // New component for Course CRUD
+import CourseForm from "../../components/admin/CourseForm"; // New component for Course CRUD
 
 export default function Courses() {
+   const [imagePreview, setImagePreview] = useState("");
+  const navigate=useNavigate();
+  const [viewType, setViewType] = useState("table"); // default to "table"
+
     const { data=[], isLoading, isError, error } = useGetCourses();
   const createMutation = useAddCourse();
   const updateMutation = useUpdateCourse();
@@ -88,6 +95,11 @@ export default function Courses() {
     setShowCourseForm(false);
     setSelectedCourse(null); // Clear selected course
   };
+const handleViewLessons = (courseId) => {
+  navigate(`${courseId}/lessons`); // relative path
+  
+};
+
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -115,82 +127,44 @@ export default function Courses() {
       )}
 
       {/* Page Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          Course Management
-        </h2>
-        <button
-          onClick={handleAddCourse}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition"
-        >
-          + Add Course
-        </button>
-      </div>
+<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
+  <h2 className="text-2xl font-semibold text-gray-800">Course Management</h2>
+  
+  <div className="flex items-center gap-3">
+    <select
+      value={viewType}
+      onChange={(e) => setViewType(e.target.value)}
+      className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:border-blue-500"
+    >
+      <option value="card">Card View</option>
+      <option value="table">Table View</option>
+    </select>
+    
+    <button
+      onClick={handleAddCourse}
+      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition"
+    >
+      + Add Course
+    </button>
+  </div>
+</div>
+{viewType === "table" ? (
+  <CourseTable
+    courses={data}
+    onEdit={handleEditCourse}
+    onDelete={openDeleteModal}
+    onViewLessons={handleViewLessons}
+  />
+) : (
+  <CourseCards
+    courses={data}
+    onEdit={handleEditCourse}
+    onDelete={openDeleteModal}
+    onViewLessons={handleViewLessons}
+  />
+)}
 
-      {/* Courses Table */}
-      <div className="overflow-x-auto bg-white rounded-lg shadow-xl border border-gray-200">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="py-3 px-5 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Language
-              </th>
-              <th className="py-3 px-5 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Description
-              </th>
-              <th className="py-3 px-5 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Flag
-              </th>
-              <th className="py-3 px-5 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {data.map((course, index) => (
-              <tr
-                key={course.id}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-              >
-                <td className="py-3 px-5 whitespace-nowrap text-sm text-gray-800">
-                  {course.language}
-                </td>
-                <td className="py-3 px-5 text-sm text-gray-800 max-w-xs overflow-hidden text-ellipsis">
-                  {course.description}
-                </td>
-                <td className="py-3 px-5 text-center">
-                  {course.flagPath ? (
-                    <a
-                      href={`http://localhost:3001/${course.flagPath}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-blue-600 underline"
-                    >
-                      View Flag
-                    </a>
-                  ) : (
-                    <span className="text-gray-400">No Flag</span>
-                  )}
-                </td>
-                <td className="py-3 px-5 text-center space-x-2">
-                  <button
-                    onClick={() => handleEditCourse(course)}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => openDeleteModal(course._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
     </div>
   );
 }

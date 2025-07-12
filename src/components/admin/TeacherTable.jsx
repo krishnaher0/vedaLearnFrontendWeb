@@ -8,46 +8,12 @@ import {
   useUpdateTeacher,
   useDeleteTeacher,
 } from "../../hooks/admin/useAdminTeacher";
-import TeacherForm from "../auth/TeacherForm";
+import TeacherForm from "./TeacherForm";
 
 export default function TeacherTable() {
-    const [teachers, setTeachers] = useState([]);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const limit = 5;
-  
 
-  // // Fetch teachers when search or page changes
-  // useEffect(() => {
-  //   const fetchTeachers = async () => {
-  //     try {
-  //       const res = await axios.get("http://localhost:3001/api/teachers", {
-  //         params: { search, page, limit },
-  //       });
-  //       setTeachers(res.data.data);
-  //       setTotalPages(res.data.totalPages);
-  //     } catch (err) {
-  //       console.error("Failed to fetch teachers:", err);
-  //     }
-  //   };
 
-  //   fetchTeachers();
-  // }, [search, page]);
-
-  // const handleSearchChange = (e) => {
-  //   setSearch(e.target.value);
-  //   setPage(1); // reset page to 1 on new search
-  // };
-
-  // const goPrevious = () => {
-  //   if (page > 1) setPage((p) => p - 1);
-  // };
-
-  // const goNext = () => {
-  //   if (page < totalPages) setPage((p) => p + 1);
-  // };
-  const qc = useQueryClient();
+ 
   const { data = [], isLoading, isError, error } = useGetTeacher();
 
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -190,19 +156,18 @@ export default function TeacherTable() {
                 <td className="py-3 px-5 whitespace-nowrap text-sm text-gray-800">
                   {new Date(teacher.createdAt).toLocaleDateString()}
                 </td>
-                <td className="py-3 px-5 text-center whitespace-nowrap">
-                  {teacher.cvImage ? (
-                    <a
-                      href={`http://localhost:3001/${teacher.cvImage}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-blue-600 hover:text-blue-800 underline font-medium transition duration-200 ease-in-out">
-                      View CV
-                    </a>
-                  ) : (
-                    <span className="text-gray-400 text-sm">No CV</span>
-                  )}
-                </td>
+                 <td className="py-3 px-5 text-center">
+                {teacher.cvImage ? (
+                  <img
+                    src={`http://localhost:3001/${teacher.cvImage}`}
+                    alt={`${teacher.name} flag`}
+                    className="h-10 w-auto inline-block rounded shadow-md"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <span className="text-gray-400">No CV</span>
+                )}
+              </td>
                 <td className="py-3 px-5 text-center whitespace-nowrap space-x-2">
                   <button
                     onClick={() => handleEdit(teacher)}

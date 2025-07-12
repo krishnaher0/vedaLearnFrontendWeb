@@ -22,6 +22,10 @@ export const useLoginUser= ()=>{
                 if( role==="Admin" || role==="Teacher"){
                     navigate("/admin/dashboard")
                 }
+                else if(role=="Learner"){
+                    navigate("/")
+                    
+                }
             },
             onError:(err)=>{
                 toast.error(err?.message || "Login Failed")
