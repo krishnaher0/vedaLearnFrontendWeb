@@ -11,7 +11,7 @@ export const getQuestionsApi = (params) => {
 export const getQuestionsByLessonApi = (lessonId) => {
   const token = localStorage.getItem("token");
   return axios.get(`/admin/questions/lesson/${lessonId}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    // headers: { Authorization: `Bearer ${token}` },
     
   });
 };
@@ -57,3 +57,13 @@ export const deleteQuestionApi = (questionId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// 🔵 Get a single question by lesson ID and index
+export const getQuestionByLessonIndexApi = (lessonId, questionIndex) => {
+  const token = localStorage.getItem("token");
+
+  return axios.get(`/admin/questions/lesson/${lessonId}/index/${questionIndex}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
