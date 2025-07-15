@@ -8,3 +8,13 @@ export const loginUserApi=async(data)=> {
    const response=await axios.post("/auth/login",data)
    return response
 }
+export const requestResetPasswordApi = async(data) =>{
+  const response = await axios.post("/auth/request-reset", data)
+  return response;
+}
+ 
+export const resetPasswordApi = async(data, token) =>{
+    const response = await axios.post("/auth/reset-password/" + token, data)
+    
+    return response;
+}
