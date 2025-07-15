@@ -34,10 +34,10 @@ const Dashboard = () => {
 
   // 3. Language Popularity (Donut)
   const languagePopularity = {
-    series: [40, 30, 20, 10],
+    series: [40, 30, 20],
     options: {
       chart: { type: 'donut' },
-      labels: ['Sanskrit', 'Newari', 'Nepali', 'Japanese'],
+      labels: ['Sanskrit', 'Newari', 'Nepali', ],
       title: { text: 'Language Popularity' }
     }
   };

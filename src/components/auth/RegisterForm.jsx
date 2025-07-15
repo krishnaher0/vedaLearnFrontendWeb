@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import useRegisterUser from "../../hooks/useRegisterUser"
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RegisterForm = () => {
   const { mutate, error, data, isError, isPending, isSuccess } =
@@ -27,7 +28,15 @@ const RegisterForm = () => {
       mutate(values);
     },
   });
+
    const navigate = useNavigate();
+
+   useEffect(() => {
+  if (isSuccess) {
+    navigate("/login");
+  }
+}, [isSuccess, navigate]);
+
   const handlelogin = (err) => {
     err.preventDefault();
     navigate("/login");

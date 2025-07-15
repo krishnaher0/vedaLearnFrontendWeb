@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/AuthProvider";
 
 const LoginForm = () => {
+  
   const { isAuthenticated, role } = useContext(AuthContext);
   const { mutate, error, data, isPending, isError, isSuccess } = useLoginUser();
   const validationSchema = Yup.object({
@@ -30,6 +31,12 @@ const LoginForm = () => {
     err.preventDefault();
     navigate("/register");
   };
+
+  
+
+const handleForgotPassword = () => {
+  navigate("/request-reset-password");
+};
   
 
   return (
@@ -96,6 +103,12 @@ const LoginForm = () => {
         </button>
       </form>
       <div className="h-10"></div>
+       <button
+    onClick={handleForgotPassword}
+    className="text-blue-400 hover:underline"
+  >
+    Forgot Password
+  </button>
       <div>
         Don't have an account?{" "}
         <button onClick={handleregister} className="text-blue-400 ">

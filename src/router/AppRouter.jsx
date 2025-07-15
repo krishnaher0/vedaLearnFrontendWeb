@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
-import MainLayout from "../layout/MainLayout";
+
 
 import NormalUserRoute from "./NormalUserRoute";
 
@@ -20,25 +20,33 @@ import Question from "../pages/admin/Question";
 import HomePage from "../pages/HomePage";
 import LessonsPage from "../components/userPage/LessonPage";
 import UserLessonPlayer from "../components/userPage/UserLessonPlayer";
+import CoursePage from "../components/userPage/CoursePage";
+import RequestResetPasswordPage from "../pages/RequestResetPassword";
+import ResetPasswordPage from "../pages/ResetPassword";
 // import DashboardContent from '../layout/DashboardContent'
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-           <Route element={<MainLayout />}>
+           {/* <Route element={<MainLayout />}> */}
       {/* All routes below will include Footer */}
       <Route path="/" element={<HomePage />} />
       <Route path="/welcome" element={<WelcomeScreen />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/request-reset-password" element={<RequestResetPasswordPage />} />
+      <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> 
 
       <Route path="/user/*" element={<NormalUserRoute />}>
-        <Route path="courses/:courseId/lessons" element={<LessonsPage />} />
-<Route path="courses/:courseId/lessons/:lessonId/questions" element={<UserLessonPlayer />} />
-        <Route path="*" element={<>404 Not Found</>} />
-      </Route>
-    </Route>
+      <Route path="courses" element={<CoursePage />} />
+  
+  <Route path="courses/:courseId/lessons" element={<LessonsPage />} />
+  
+  <Route path="courses/:courseId/lessons/:lessonId/questions" element={<UserLessonPlayer />} />
+  
+  <Route path="*" element={<>404 Not Found</>} />
+</Route>
 
         <Route path="/admin" element={<DashboardContent />}>
           <Route path="dashboard" element={<Dashboard />} />

@@ -4,6 +4,7 @@ import {
   enrollCourseApi,
   completeLessonApi,
   updateProgressApi,
+  getProgressApi
   
 } from '../api/userProgressApi';
 
@@ -37,19 +38,17 @@ export const useUpdateProgress = () => {
   return useMutation({
     mutationFn: ({ userId, progressData }) => updateProgressApi(userId, progressData),
     mutationKey: ['updateProgress'],
-    onSuccess: (data) => {
-      toast.success(data.message || 'Progress updated');
-    },
-    onError: (err) => {
-      toast.error(err.response?.data?.message || 'Failed to update progress');
-    },
+   
   });
 };
 
-// export const useFetchQuestionByIndex = ({ lessonId, questionIndex, userId }) => {
-//   return useQuery({
-//     queryKey: ['questionByIndex', lessonId, questionIndex, userId],
-//     queryFn: () => fetchQuestionByIndexApi(lessonId, questionIndex, userId),
-//     enabled: !!lessonId && questionIndex !== undefined && !!userId, // to avoid running before args are ready
-//   });
-// };
+export const useUserProgress = (userId) => {
+  return useQuery({
+    queryKey: ['userProgress', userId],
+    queryFn: () => getProgressApi(userId),
+    enabled: !!userId,
+    onError: (err) => {
+      toast.error(err.response?.data?.message || 'Failed to fetch user progress');
+    },
+  });
+};

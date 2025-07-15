@@ -1,7 +1,5 @@
-// Sidebar.js
 import React from "react";
-import logo from "../assets/logo/vedlogo.png"
-
+import logo from "../assets/logo/vedlogo.png";
 import {
   FaTachometerAlt,
   FaBook,
@@ -20,94 +18,78 @@ function Sidebar() {
     e.preventDefault();
     navigate(path);
   };
- 
- 
+
   return (
-    <div className="w-64 bg-white shadow-lg p-5">
-      <div className="flex flex-col items-center pb-5 mb-5 ml-9 border-b border-gray-200">
-        <img
-              src={logo}
-              alt="VedLingo"
-              className=" fixed top-1 left-4 w-[60px] h-auto z-[100]"
-            />
-        <div className="text-l font-semibold text-gray-800">
-          Admin Dashboard
-        </div>
+    <div className="w-72 bg-white shadow-xl h-screen p-6 flex flex-col border-r border-gray-200">
+      <div className="flex items-center mb-10">
+        <img src={logo} alt="VedLingo" className="w-12 h-12 mr-3" />
+        <div className="text-xl font-bold text-gray-800">Admin Panel</div>
       </div>
-      <nav>
-        <ul>
-          <li className="mb-2">
-            <a
-              href="#"
-              onClick={handleNavigate("/admin/dashboard")}
 
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 active:bg-blue-100 active:text-blue-700 font-medium bg-blue-50 text-blue-600">
-              {/* Added active classes for Dashboard */}
-              <FaTachometerAlt className="mr-3 text-lg" />
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href="#"
-              onClick={handleNavigate("/admin/courses")}
-
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium">
-              <FaBook className="mr-3 text-lg" />
-              <span>Courses</span>
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href=""
-              onClick={handleNavigate("/admin/teacher")}
-
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium">
-              <FaChalkboardTeacher className="mr-3 text-lg" />
-              <span >Teachers</span>
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href="#"
-              onClick={handleNavigate("/admin/student")}
-
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium">
-              <FaUserGraduate className="mr-3 text-lg" />
-              <span >Students</span>
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href="#"
-              onClick={handleNavigate("/admin/reports")}
-
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium">
-              <FaFileAlt className="mr-3 text-lg" />
-              <span>Reports</span>
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href="#"
-              onClick={handleNavigate("/admin/feedback")}
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium">
-              <FaCommentAlt className="mr-3 text-lg" />
-              <span>Feedback</span>
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href="#"
-              onClick={handleNavigate("/admin/settings")}
-              className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium">
-              <FaCog className="mr-3 text-lg" />
-              <span>Settings</span>
-            </a>
-          </li>
+      <nav className="flex-1">
+        <ul className="space-y-2">
+          <SidebarItem
+            icon={<FaTachometerAlt />}
+            label="Dashboard"
+            onClick={handleNavigate("/admin/dashboard")}
+            active
+          />
+          <SidebarItem
+            icon={<FaBook />}
+            label="Courses"
+            onClick={handleNavigate("/admin/courses")}
+          />
+          <SidebarItem
+            icon={<FaChalkboardTeacher />}
+            label="Teachers"
+            onClick={handleNavigate("/admin/teacher")}
+          />
+          <SidebarItem
+            icon={<FaUserGraduate />}
+            label="Students"
+            onClick={handleNavigate("/admin/student")}
+          />
+          <SidebarItem
+            icon={<FaFileAlt />}
+            label="Reports"
+            onClick={handleNavigate("/admin/reports")}
+          />
+          <SidebarItem
+            icon={<FaCommentAlt />}
+            label="Feedback"
+            onClick={handleNavigate("/admin/feedback")}
+          />
+          <SidebarItem
+            icon={<FaCog />}
+            label="Settings"
+            onClick={handleNavigate("/admin/settings")}
+          />
         </ul>
       </nav>
+
+      <div className="mt-auto text-sm text-gray-400 text-center pt-6 border-t">
+        © 2025 VedLingo
+      </div>
     </div>
+  );
+}
+
+function SidebarItem({ icon, label, onClick, active = false }) {
+  return (
+    <li>
+      <a
+        href="#"
+        onClick={onClick}
+        className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 font-medium ${
+          active
+            ? "bg-blue-50 text-blue-600"
+            : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+        }`}
+      >
+        <span className="mr-3 text-lg">{icon}</span>
+        <span className="text-base">{label}</span>
+      </a>
+    </li>
   );
 }
 

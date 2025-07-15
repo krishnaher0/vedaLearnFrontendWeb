@@ -7,6 +7,7 @@ import {
   createQuestionsBatchService,
   updateQuestionService,
   deleteQuestionService,
+  getQuestionByLessonIndexService,
 } from "../../services/admin/QuestionService";
 import { toast } from "react-hot-toast";
 
@@ -104,4 +105,15 @@ export const useDeleteQuestion = () => {
     },
   });
 };
+
+
+
+export const useGetQuestionByLessonIndex = (lessonId, questionIndex) => {
+  return useQuery({
+    queryKey: ["questionByLessonIndex", lessonId, questionIndex],
+    queryFn: () => getQuestionByLessonIndexService(lessonId, questionIndex),
+    enabled: lessonId != null && questionIndex != null, // ⚠ don't use `!!questionIndex`
+  });
+};
+
 

@@ -10,21 +10,22 @@ export default function CourseCards({ courses, onEdit, onDelete, onViewLessons }
           onClick={() => onViewLessons(course._id)}
           className="bg-white rounded-xl shadow-lg border border-gray-200 p-5 flex flex-col justify-between transition hover:shadow-2xl"
         >
+           {/* Flag in Top-Right */}
+        {course.flagPath ? (
+          <img
+            src={`http://localhost:3001/${course.flagPath}`}
+            alt={`${course.language} Flag`}
+            className="absolute top-4 right-4 w-16 h-10 object-cover rounded shadow border"
+          />
+        ) : (
+          <div className="absolute top-4 right-4 w-16 h-10 bg-gray-100 flex items-center justify-center text-xs text-gray-400 rounded border">
+            No Flag
+          </div>
+        )}
           <h3 className="text-lg font-semibold text-gray-800 mb-2">{course.language}</h3>
           <p className="text-gray-600 text-sm mb-3 line-clamp-3">{course.description}</p>
-          {course.flagPath ? (
-            <a
-              href={`http://localhost:3001/${course.flagPath}`}
-              onClick={(e) => e.stopPropagation()}
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-600 underline text-sm mb-4"
-            >
-              View Flag
-            </a>
-          ) : (
-            <span className="text-gray-400 text-sm mb-4">No Flag</span>
-          )}
+         
+
           <div className="mt-auto flex space-x-2">
             <button
               onClick={(e) => {

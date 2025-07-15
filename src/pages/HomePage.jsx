@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useRef,useContext } from "react";
 import Header from "../components/userPage/Header";
 import Footer from "../components/userPage/Footer";
 import UserCourseCard from "../components/userPage/UserCourseCard";
 import { motion } from "framer-motion";
 import { useGetCourses } from "../hooks/admin/useAdminCourse";
+import StoriesSection from "../components/StoriesSection";
+import { useNavigate } from "react-router-dom";
+import {AuthContext} from "../auth/AuthProvider";
+import { toast } from "react-toastify";
 
 
 
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const storiesRef = useRef(null);
+
+  const handleStartLearning = () => {
+      if (!user) {
+        toast.error("You must be logged in to enroll");
+        navigate("/login");
+        return;
+      }
+    }
+  const handleScrollToStories = () => {
+    storiesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
  const { data: courses = [], isLoading, isError }  = useGetCourses();
   return (
     <>
-      <Header />
+       <Header onScrollToStories={handleScrollToStories} />
 
-      <div className="bg-yellow-100 text-yellow-800 text-center py-1 text-xs font-medium">
+
+      <div className="bg-yellow-100 text-yellow-800 text-center py-8 text-xs font-medium">
         Now supporting Sanskrit & Nepali!
       </div>
 
@@ -44,7 +63,7 @@ const HomePage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.7 }}
         >
-          <button className="bg-green-500 text-white px-6 py-3 rounded">Start Learning Free</button>
+          <button onClick={handleStartLearning} className="bg-green-500 text-white px-6 py-3 rounded">Start Learning Free</button>
           <button className="border border-blue-600 text-blue-600 px-6 py-3 rounded">Join 10M+ Learners</button>
         </motion.div>
 
@@ -124,6 +143,10 @@ const HomePage = () => {
             <button className="border border-white px-6 py-3 rounded">View Courses</button>
           </div>
         </motion.div>
+        <div ref={storiesRef} id="stories">
+        <StoriesSection />
+      </div>
+        
       </main>
 
       <Footer />

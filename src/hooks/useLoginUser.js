@@ -19,10 +19,10 @@ export const useLoginUser= ()=>{
                 toast.success(data?.message || "Login success")
                 login(data?.data, data?.token);
                 
-                if( role==="Admin" || role==="Teacher"){
+                if( data?.data.role==="Admin" || data?.data.role==="Teacher"){
                     navigate("/admin/dashboard")
                 }
-                else if(role=="Learner"){
+                else if(data?.data.role=="Learner"){
                     navigate("/")
                     
                 }

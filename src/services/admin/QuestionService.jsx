@@ -1,5 +1,6 @@
 import {
   getQuestionsApi,
+  getQuestionByLessonIndexApi,
   getQuestionsByLessonApi,
   getQuestionByIdApi,
   createQuestionApi,
@@ -85,4 +86,13 @@ export const deleteQuestionService = async (questionId) => {
   }
 };
 
-
+export const getQuestionByLessonIndexService = async (lessonId, questionIndex) => {
+  try {
+    const response = await getQuestionByLessonIndexApi(lessonId, questionIndex);
+    console.log("✅ API response:", response.data); // should match the JSON you posted
+    return response.data; // ✅ NOT response.data.data
+  } catch (err) {
+    console.error("❌ Service error:", err);
+    throw err.response?.data || { message: "Failed to fetch question" };
+  }
+};
