@@ -18,7 +18,7 @@ export default function CourseForm({ course, onSave, onCancel }) {
         description: course.description || "",
       });
       if (course.flagPath) {
-        setImagePreview(`http://localhost:3001/${course.flagPath}`);
+        setImagePreview(`http://localhost:3001/uploads/${course.flagPath}`);
       } else {
         setImagePreview("");
       }
