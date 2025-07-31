@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from "react";
+import {
+  FaUser,
+  FaEnvelope,
+  FaBirthdayCake,
+  FaLock,
+  FaFileImage,
+  FaSave,
+  FaTimes,
+  FaChalkboardTeacher,
+} from "react-icons/fa";
 
 export default function TeacherForm({ teacher, onCancel, onSave }) {
   const [formData, setFormData] = useState({
@@ -48,115 +58,184 @@ export default function TeacherForm({ teacher, onCancel, onSave }) {
     if (formData.cvImage) {
       console.log("File being sent:", formData.cvImage);
       payload.append("cvImage", formData.cvImage);
-      console.log("file:",formData.cvImage)
+      console.log("file:", formData.cvImage);
     } else {
       console.log("⚠️ No file selected");
     }
     console.log("Payload content before sending to onSave:", payload);
     for (let [key, value] of payload.entries()) {
-        console.log(key, value);
+      console.log(key, value);
     }
 
     onSave(payload);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      // Remove bg-white, rounded, shadow-md, mb-6 as these are now handled by the parent modal wrapper
-      className="p-6" // Keep padding
-    >
-      <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center"> {/* Centered heading, increased size and margin */}
-        {teacher ? "Edit Teacher" : "Add New Teacher"} {/* More descriptive titles */}
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4"> {/* Adjusted gap values */}
-        {/* Name */}
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label> {/* Label styling */}
-          <input
-            id="name" // Added id for accessibility
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out sm:text-sm" // Enhanced input styling
-            required
-          />
-        </div>
-        {/* Email */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label> {/* Label styling */}
-          <input
-            id="email" // Added id for accessibility
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out sm:text-sm" // Enhanced input styling
-            required
-          />
-        </div>
-        {/* Age */}
-        <div>
-          <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">Age</label> {/* Label styling */}
-          <input
-            id="age" // Added id for accessibility
-            name="age"
-            type="number"
-            value={formData.age}
-            onChange={handleChange}
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out sm:text-sm" // Enhanced input styling
-            required
-          />
-        </div>
-        {/* Password – only on create */}
-        {!teacher && (
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label> {/* Label styling */}
-            <input
-              id="password" // Added id for accessibility
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out sm:text-sm" // Enhanced input styling
-              required
-            />
+    <div className="relative bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-xl shadow-2xl border border-slate-600/50 overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/5 via-transparent to-purple-600/5 pointer-events-none"></div>
+      <div className="absolute top-4 right-4 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl"></div>
+      <div className="absolute bottom-4 left-4 w-12 h-12 bg-purple-500/10 rounded-full blur-lg"></div>
+
+      <form onSubmit={handleSubmit} className="relative z-10 p-6">
+        {/* Header */}
+        <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-600/50">
+          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center">
+            <FaChalkboardTeacher className="text-white text-lg" />
           </div>
-        )}
-        {/* CV upload */}
-        <div className="sm:col-span-2"> {/* Make CV upload span full width on small screens and up */}
-          <label htmlFor="cvImage" className="block text-sm font-medium text-gray-700 mb-1">CV Image</label> {/* Label styling */}
-          <input
-            id="cvImage" // Added id for accessibility
-            type="file"
-            name="cvImage"
-            accept="image/*"
-            onChange={handleFile}
-            className="w-full text-sm text-gray-500
-                       file:mr-4 file:py-2 file:px-4
-                       file:rounded-full file:border-0
-                       file:text-sm file:font-semibold
-                       file:bg-blue-50 file:text-blue-700
-                       hover:file:bg-blue-100 transition duration-150 ease-in-out" // Styled file input
-          />
-           {formData.cvImage && typeof formData.cvImage === 'object' && (
-            <p className="mt-2 text-sm text-gray-500">Selected file: {formData.cvImage.name}</p>
-          )}
+          <div>
+            <h3 className="text-xl font-bold text-white">
+              {teacher ? "Edit Teacher" : "Add New Teacher"}
+            </h3>
+            <p className="text-slate-400 text-sm">
+              {teacher ? "Update instructor information" : "Register a new instructor"}
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="mt-8 flex justify-end gap-3"> {/* Adjusted margin-top and gap, aligned buttons to end */}
-        <button
-          type="button" // Change to type="button" to prevent accidental form submission
-          onClick={onCancel}
-          className="px-5 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out">
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="px-5 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
-          Save
-        </button>
-      </div>
-    </form>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Name Field */}
+          <div className="space-y-2">
+            <label htmlFor="name" className="flex items-center space-x-2 text-sm font-medium text-slate-300">
+              <FaUser className="text-blue-400 text-xs" />
+              <span>Full Name</span>
+            </label>
+            <div className="relative">
+              <input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full bg-slate-700/50 border border-slate-600 text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-slate-400 transition-all duration-300"
+                placeholder="Enter full name"
+                required
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-transparent rounded-lg pointer-events-none"></div>
+            </div>
+          </div>
+
+          {/* Email Field */}
+          <div className="space-y-2">
+            <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-slate-300">
+              <FaEnvelope className="text-emerald-400 text-xs" />
+              <span>Email Address</span>
+            </label>
+            <div className="relative">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full bg-slate-700/50 border border-slate-600 text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 placeholder-slate-400 transition-all duration-300"
+                placeholder="Enter email address"
+                required
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/5 to-transparent rounded-lg pointer-events-none"></div>
+            </div>
+          </div>
+
+          {/* Age Field */}
+          <div className="space-y-2">
+            <label htmlFor="age" className="flex items-center space-x-2 text-sm font-medium text-slate-300">
+              <FaBirthdayCake className="text-purple-400 text-xs" />
+              <span>Age</span>
+            </label>
+            <div className="relative">
+              <input
+                id="age"
+                name="age"
+                type="number"
+                value={formData.age}
+                onChange={handleChange}
+                className="w-full bg-slate-700/50 border border-slate-600 text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 placeholder-slate-400 transition-all duration-300"
+                placeholder="Enter age"
+                min="18"
+                max="100"
+                required
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-transparent rounded-lg pointer-events-none"></div>
+            </div>
+          </div>
+
+          {/* Password Field - only on create */}
+          {!teacher && (
+            <div className="space-y-2">
+              <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-slate-300">
+                <FaLock className="text-orange-400 text-xs" />
+                <span>Password</span>
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full bg-slate-700/50 border border-slate-600 text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 placeholder-slate-400 transition-all duration-300"
+                  placeholder="Enter secure password"
+                  required
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600/5 to-transparent rounded-lg pointer-events-none"></div>
+              </div>
+            </div>
+          )}
+
+          {/* CV Upload Field */}
+          <div className={`space-y-2 ${!teacher ? 'sm:col-span-2' : 'sm:col-span-1'}`}>
+            <label htmlFor="cvImage" className="flex items-center space-x-2 text-sm font-medium text-slate-300">
+              <FaFileImage className="text-cyan-400 text-xs" />
+              <span>CV Document</span>
+            </label>
+            <div className="relative">
+              <input
+                id="cvImage"
+                type="file"
+                name="cvImage"
+                accept="image/*"
+                onChange={handleFile}
+                className="w-full bg-slate-700/50 border border-slate-600 text-slate-300 rounded-lg transition-all duration-300
+                           file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+                           file:text-sm file:font-semibold file:bg-gradient-to-r file:from-cyan-500 file:to-cyan-600
+                           file:text-white hover:file:from-cyan-600 hover:file:to-cyan-700
+                           file:transition-all file:duration-300 file:shadow-md"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/5 to-transparent rounded-lg pointer-events-none"></div>
+            </div>
+            {formData.cvImage && typeof formData.cvImage === 'object' && (
+              <div className="mt-2 p-3 bg-slate-700/30 rounded-lg border border-slate-600/50">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-md flex items-center justify-center">
+                    <FaFileImage className="text-white text-xs" />
+                  </div>
+                  <span className="text-slate-300 text-sm font-medium">{formData.cvImage.name}</span>
+                  <div className="flex-1"></div>
+                  <span className="text-cyan-400 text-xs font-medium">Selected</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-8 pt-6 border-t border-slate-600/50 flex justify-end space-x-4">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="flex items-center space-x-2 px-6 py-3 bg-slate-600/50 hover:bg-slate-600/70 text-slate-300 hover:text-white rounded-lg font-medium transition-all duration-300 border border-slate-500/50 hover:border-slate-400/50"
+          >
+            <FaTimes className="text-sm" />
+            <span>Cancel</span>
+          </button>
+          <button
+            type="submit"
+            className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+          >
+            <FaSave className="text-sm" />
+            <span>{teacher ? "Update Teacher" : "Add Teacher"}</span>
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

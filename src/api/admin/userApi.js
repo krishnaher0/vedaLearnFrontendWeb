@@ -1,8 +1,5 @@
 import axios from "../api"
 
-
-
-
 export const getAllUserApi = async ({ page, limit }) => {
   const token = localStorage.getItem("token");
   console.log("🔑 Sending token:", token); 
@@ -19,4 +16,3 @@ export const getAllUserApi = async ({ page, limit }) => {
 export const getOneUserApi = (id) => axios.get("/admin/user/" + id )
 export const createOneUserApi = (data) => axios.post("/admin/user/" , data)
 export const updateOneUserApi = (id, data) => axios.put("/admin/user/" + id, data)
-export const deleteOneUserApi = (id) => axios.delete("/admin/user/" + id)

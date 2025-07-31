@@ -50,3 +50,5 @@ export const useGetCourses = () =>
     queryKey: ["admin_courses"],
     queryFn: getAllCoursesApi,
   });
+
+  

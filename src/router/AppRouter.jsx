@@ -14,8 +14,7 @@ import WelcomeScreen from "../pages/WelcomeScreen";
 import Courses from "../pages/admin/Course";
 import Feedback from "../pages/admin/Feedback";
 import Lessons from "../pages/admin/Lessons";
-import Setting from "../pages/admin/Setting";
-import Reports from "../pages/admin/Reports";
+
 import Question from "../pages/admin/Question";
 import HomePage from "../pages/HomePage";
 import LessonsPage from "../components/userPage/LessonPage";
@@ -23,7 +22,15 @@ import UserLessonPlayer from "../components/userPage/UserLessonPlayer";
 import CoursePage from "../components/userPage/CoursePage";
 import RequestResetPasswordPage from "../pages/RequestResetPassword";
 import ResetPasswordPage from "../pages/ResetPassword";
-// import DashboardContent from '../layout/DashboardContent'
+import PaymentSuccess from "../components/userPage/PaymentSuccess";
+import PaymentFailure from "../components/userPage/PaymentFailure";
+import AudioGrid from "../components/AudioGrid";
+import PaymentPage from "../components/userPage/PaymentPage";
+import VideoGrid from "../components/videoGrid";
+import UserSubscriptionsPage from "../components/admin/userSubscription";
+import PlanPage from "../pages/planPage";
+import LearningsPage from "../pages/admin/LearningsPage";
+
 
 export default function AppRouter() {
   return (
@@ -38,8 +45,17 @@ export default function AppRouter() {
       <Route path="/request-reset-password" element={<RequestResetPasswordPage />} />
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> 
 
+      <Route path="/payment-success" element={<PaymentSuccess />} />
+      <Route path="/payment-failure" element={<PaymentFailure />} />
+       <Route path="esewa-redirect" element={<PaymentPage />} />
+
+
       <Route path="/user/*" element={<NormalUserRoute />}>
       <Route path="courses" element={<CoursePage />} />
+      <Route path="learn/audio" element={<AudioGrid />} />
+      <Route path="learn/video" element={<VideoGrid />} />
+
+     
   
   <Route path="courses/:courseId/lessons" element={<LessonsPage />} />
   
@@ -53,14 +69,17 @@ export default function AppRouter() {
           <Route path="student" element={<UserTable />} />
           <Route path="teacher" element={<TeacherTable />} />
           <Route path="courses" element={<Courses />} />
+          <Route path="learnings" element={<LearningsPage />} />
+          <Route path="subscribed-users" element={<UserSubscriptionsPage />} />
+          <Route path="plan" element={<PlanPage />} />
           <Route path="courses/:courseId/lessons" element={<Lessons />} />
           <Route
             path="courses/:courseId/lessons/:lessonId/questions"
             element={<Question />}
           />
-          <Route path="reports" element={<Reports />} />
-          <Route path="feedback" element={<Feedback />} />
-          <Route path="settings" element={<Setting />} />
+         
+          <Route path="chat" element={<Feedback />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>

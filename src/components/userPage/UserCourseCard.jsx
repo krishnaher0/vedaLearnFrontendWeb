@@ -19,7 +19,9 @@ export default function UserCourseCard({ course }) {
       navigate("/login");
       return;
     }
-    const isAlreadyEnrolled = user.enrolledCourses?.includes(course._id);
+    const isAlreadyEnrolled = user.enrolledCourses?.some(
+    (c) => c.course === course._id || c.course?._id === course._id
+  );
 
     if (isAlreadyEnrolled) {
       navigate(`/user/courses/${course._id}/lessons`);

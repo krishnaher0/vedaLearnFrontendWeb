@@ -1,6 +1,6 @@
 import axios from "./api"
 export const enrollCourseApi = (userId, courseId) => {
-  return axios.post(`http://localhost:3001/api/user/progress/${userId}/enroll-course`, {
+  return axios.post(`/user/progress/${userId}/enroll-course`, {
     courseId,  // courseId sent in the body
   }).then(res => res.data);
 };
@@ -21,11 +21,7 @@ export const updateProgressApi = async (userId, progressData) => {
     throw error;
   }
 };
-// export const fetchQuestionByIndexApi = (lessonId, questionIndex) => {
-//   return axios.get(`user/progress/lesson/${lessonId}/question/${questionIndex}`, {
-//     params: { lessonId, questionIndex },
-//   });
-// };
+
 export const getProgressApi = (userId) => {
   // progressData: { lessonId, questionId, isCorrect, ... }
   return axios.get(`user/progress/${userId}/`)

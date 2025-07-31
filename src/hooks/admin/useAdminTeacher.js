@@ -19,9 +19,16 @@ export const useAddTeacher = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: registerTeacherService,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin_users"] }),
+    onSuccess: () => {
+      toast.success("Teacher added successfully");
+      qc.invalidateQueries({ queryKey: ["admin_users"] });
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Failed to add teacher");
+    },
   });
 };
+
 
 export const useUpdateTeacher = () => {
   const qc = useQueryClient();

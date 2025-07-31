@@ -1,4 +1,4 @@
-import React, { useRef,useContext } from "react";
+import React, {useState, useRef,useContext } from "react";
 import Header from "../components/userPage/Header";
 import Footer from "../components/userPage/Footer";
 import UserCourseCard from "../components/userPage/UserCourseCard";
@@ -8,7 +8,7 @@ import StoriesSection from "../components/StoriesSection";
 import { useNavigate } from "react-router-dom";
 import {AuthContext} from "../auth/AuthProvider";
 import { toast } from "react-toastify";
-
+import SubscriptionModal from "../components/userPage/SubscriptionModal";
 
 
 
@@ -16,21 +16,37 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const storiesRef = useRef(null);
+  
 
   const handleStartLearning = () => {
+  if (!user) {
+    toast.error("You must be logged in to enroll");
+    navigate("/login");
+    return;
+  }
+
+  // Navigate to courses page
+  navigate("/user/courses");
+};
+
+     const handleStartPayment = () => {
       if (!user) {
-        toast.error("You must be logged in to enroll");
+        toast.error("You must be logged in to pay");
         navigate("/login");
         return;
       }
+       setShowSubscriptionModal(true);
     }
   const handleScrollToStories = () => {
     storiesRef.current?.scrollIntoView({ behavior: "smooth" });
   };
  const { data: courses = [], isLoading, isError }  = useGetCourses();
+ const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+
   return (
     <>
        <Header onScrollToStories={handleScrollToStories} />
+       
 
 
       <div className="bg-yellow-100 text-yellow-800 text-center py-8 text-xs font-medium">
@@ -64,6 +80,7 @@ const HomePage = () => {
           transition={{ delay: 0.8, duration: 0.7 }}
         >
           <button onClick={handleStartLearning} className="bg-green-500 text-white px-6 py-3 rounded">Start Learning Free</button>
+         
           <button className="border border-blue-600 text-blue-600 px-6 py-3 rounded">Join 10M+ Learners</button>
         </motion.div>
 
@@ -139,8 +156,23 @@ const HomePage = () => {
           <h2 className="text-2xl font-bold mb-4">Ready to Begin Your Journey?</h2>
           <p className="mb-6">Join millions discovering the beauty of Sanskrit and Nepali. Start your free journey today!</p>
           <div className="flex justify-center gap-4 flex-wrap">
-            <button className="bg-white text-green-600 px-6 py-3 rounded font-semibold">Start Free Trial</button>
-            <button className="border border-white px-6 py-3 rounded">View Courses</button>
+            <button onClick={handleStartPayment} className="bg-white text-green-600 px-6 py-3 rounded font-semibold">Start Free Trial</button>
+             {showSubscriptionModal && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="relative w-[720px] max-w-[95vw]">
+      <SubscriptionModal />
+      {/* Add a close button or area */}
+      <button
+        onClick={() => setShowSubscriptionModal(false)}
+        className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 font-bold"
+        aria-label="Close subscription modal"
+      >
+        ×
+      </button>
+    </div>
+  </div>
+)}
+            <button onClick={handleStartLearning} className="border border-white px-6 py-3 rounded">View Courses</button>
           </div>
         </motion.div>
         <div ref={storiesRef} id="stories">

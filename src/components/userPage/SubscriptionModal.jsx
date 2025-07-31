@@ -6,7 +6,10 @@ import { usePlans } from "../../hooks/admin/usePlanHook";
 import { useEsewaPayment } from "../../hooks/useSubscriptionHook";
 
 const SubscriptionModal = () => {
-  const { data: plans, isLoading } = usePlans();
+  const { data: responseData, isLoading } = usePlans();
+
+  // Now, extract the actual plans array from responseData.data
+  const plans = responseData?.data || []; 
   const esewaMutation = useEsewaPayment();
 
   const handleEsewaPayment = async (planId) => {

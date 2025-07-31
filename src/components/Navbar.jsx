@@ -1,68 +1,76 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
-import { FaSearch, FaBell, FaUserCircle,FaChevronDown } from "react-icons/fa";
+import { FaSearch, FaBell, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   return (
-    <header className="flex justify-between items-center bg-white p-4 shadow-sm rounded-lg mb-6">
+    <header className="relative flex justify-between items-center bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl rounded-xl mb-0 border border-slate-700 overflow-hidden">
+      {/* Decorative gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-purple-600/10 pointer-events-none"></div>
+      
+      {/* Decorative elements */}
+      <div className="absolute top-2 right-20 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl"></div>
+      <div className="absolute bottom-2 left-20 w-16 h-16 bg-purple-500/10 rounded-full blur-xl"></div>
+
       {/* Search Bar */}
-      <div className="flex items-center border border-gray-300 rounded-md py-2 px-3">
-        <FaSearch className="text-gray-400 mr-2" />
+      <div className="relative z-10 flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl py-3 px-4 hover:bg-white/15 transition-all duration-300 shadow-lg">
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 shadow-md">
+          <FaSearch className="text-white text-sm" />
+        </div>
         <input
           type="text"
           placeholder="Search courses, students, teachers..."
-          className="focus:outline-none w-80 text-gray-700"
+          className="focus:outline-none w-80 text-white placeholder-slate-300 bg-transparent font-medium"
         />
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center relative" ref={dropdownRef}>
-        <FaBell className="text-gray-500 text-xl mr-5 cursor-pointer hover:text-gray-700" />
-
-        {/* User Info */}
-        <div className="text-right mr-3">
-          <span className="block font-semibold text-gray-800">{user?.name || "Admin"}</span>
-          <span className="block text-sm text-gray-600">{user?.email || ""}</span>
+      <div className="relative z-10 flex items-center">
+        {/* Logout Button */}
+        <div className="relative mr-6">
+          <div 
+            className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-red-500/25 transition-all duration-300 group"
+            onClick={handleLogout}
+            title="Logout"
+          >
+            <FaSignOutAlt className="text-white text-lg group-hover:scale-110 transition-transform duration-300" />
+          </div>
         </div>
 
-       <div className="relative" ref={dropdownRef}>
-  <div className="flex items-center cursor-pointer mr-3" onClick={() => setShowDropdown((prev) => !prev)}>
-    <FaUserCircle className="text-blue-500 text-3xl" />
-    <FaChevronDown className="text-gray-600 ml-1 mt-1" />
-  </div>
-  {showDropdown && (
-    <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 shadow-lg rounded-lg z-50">
-      <button
-        onClick={handleLogout}
-        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-b"
-      >
-        Logout
-      </button>
-    </div>
-  )}
-</div>
+        {/* Notification Bell */}
+        <div className="relative mr-6">
+          <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300 group">
+            <FaBell className="text-white text-lg group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          {/* Notification badge */}
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center">
+            <span className="text-white text-xs font-bold">3</span>
+          </div>
+        </div>
+
+        {/* User Info Display */}
+        <div className="flex flex-col items-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-2 shadow-lg">
+            <FaUserCircle className="text-white text-xl" />
+          </div>
+          <div className="text-center">
+            <span className="block font-bold text-white text-sm">
+              {user?.name || "Admin"}
+            </span>
+            <span className="block text-xs text-slate-300">
+              {user?.email || "admin@vedlingo.com"}
+            </span>
+          </div>
+        </div>
       </div>
     </header>
   );
