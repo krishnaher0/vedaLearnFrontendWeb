@@ -11,6 +11,11 @@ const WelcomeScreen = () => {
     navigate("/login")
 
   }
+  const handleloginTeacher=(e)=>{
+    e.preventDefault();
+    navigate("/login/teacher")
+
+  }
   return (
     <div className="flex flex-col-reverse md:flex-row h-screen font-sans">
   {/* Left Panel */}
@@ -21,7 +26,7 @@ const WelcomeScreen = () => {
       <button onClick={handleloginlearner} className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition text-3xl">
         Login as Learners
       </button>
-      <button onClick={handleloginlearner} className="border border-gray-400 text-black px-6 py-2 rounded-full hover:bg-gray-100 transition text-3xl">
+      <button onClick={handleloginTeacher} className="border border-gray-400 text-black px-6 py-2 rounded-full hover:bg-gray-100 transition text-3xl">
         Login as Tutors
       </button>
     </div>

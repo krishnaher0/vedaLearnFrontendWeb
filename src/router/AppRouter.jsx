@@ -30,6 +30,7 @@ import VideoGrid from "../components/videoGrid";
 import UserSubscriptionsPage from "../components/admin/userSubscription";
 import PlanPage from "../pages/planPage";
 import LearningsPage from "../pages/admin/LearningsPage";
+import TeacherLoginPage from "../pages/TeacherLogin";
 
 
 export default function AppRouter() {
@@ -41,6 +42,7 @@ export default function AppRouter() {
       <Route path="/" element={<HomePage />} />
       <Route path="/welcome" element={<WelcomeScreen />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/login/teacher" element={<TeacherLoginPage />} />
       <Route path="/register" element={<Register />} />
       <Route path="/request-reset-password" element={<RequestResetPasswordPage />} />
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> 

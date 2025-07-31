@@ -1,4 +1,4 @@
-import { loginUserApi, registerUserApi,requestResetPasswordApi,resetPasswordApi } from "../api/authApi";
+import { loginTeacherApi, loginUserApi, registerUserApi,requestResetPasswordApi,resetPasswordApi } from "../api/authApi";
 export const registerUserService= async(formData)=>{
     try{
         const response= await registerUserApi(formData)
@@ -11,6 +11,15 @@ export const loginUserService=async (formData)=>{
     console.log(formData)
     try{
         const response=await loginUserApi(formData)
+        return response.data
+    }catch(err){
+        throw err.response?.dat ||{message:"Login failed"}
+    }
+}
+export const loginTeacherService=async (formData)=>{
+    console.log(formData)
+    try{
+        const response=await loginTeacherApi(formData)
         return response.data
     }catch(err){
         throw err.response?.dat ||{message:"Login failed"}

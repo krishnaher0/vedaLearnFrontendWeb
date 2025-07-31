@@ -8,6 +8,11 @@ export const loginUserApi=async(data)=> {
    const response=await axios.post("/auth/login",data)
    return response
 }
+export const loginTeacherApi=async(data)=> {
+    console.log(data)
+   const response=await axios.post("/auths/login/teacher",data)
+   return response
+}
 export const requestResetPasswordApi = async(data) =>{
   const response = await axios.post("/auth/request-reset", data)
   return response;
