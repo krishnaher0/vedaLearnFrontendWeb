@@ -12,6 +12,8 @@ const Input = (props) => (
   />
 );
 
+
+
 export default function ResetPasswordPage() {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -33,6 +35,7 @@ export default function ResetPasswordPage() {
     onSubmit: (values) => {
       // Send only password and token to backend
       resetPassword({ data: values, token });
+      navigate('/login')
     },
   });
 

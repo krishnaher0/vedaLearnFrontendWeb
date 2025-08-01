@@ -54,6 +54,7 @@ export default function AppRouter() {
 
       <Route path="/user/*" element={<NormalUserRoute />}>
       <Route path="courses" element={<CoursePage />} />
+      {/* <Route path="chat" element={<ChatPage />} /> */}
       <Route path="learn/audio" element={<AudioGrid />} />
       <Route path="learn/video" element={<VideoGrid />} />
 

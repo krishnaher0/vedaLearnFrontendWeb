@@ -46,16 +46,7 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Notification Bell */}
-        <div className="relative mr-6">
-          <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300 group">
-            <FaBell className="text-white text-lg group-hover:scale-110 transition-transform duration-300" />
-          </div>
-          {/* Notification badge */}
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-bold">3</span>
-          </div>
-        </div>
+     
 
         {/* User Info Display */}
         <div className="flex flex-col items-center">

@@ -87,6 +87,7 @@ const Header = ({ onScrollToStories }) => {
             className="hover:text-green-600 transition text-lg font-medium">
             Learn
           </Link>
+          
 
           <a
             href="#stories"
@@ -103,6 +104,21 @@ const Header = ({ onScrollToStories }) => {
             className="hover:text-green-600 transition text-lg font-medium">
             Leaderboard
           </a>
+
+           {/* <button
+        onClick={() => setShowChat(true)}
+        className="hover:text-green-600 transition text-lg font-medium"
+      >
+        Chat
+      </button>
+
+      {showChat && (
+        <ChatPopup
+          currentUser={currentUser}        // 👈 replace with actual user data
+          targetUser={anotherUser}         // 👈 choose who to chat with
+          onClose={() => setShowChat(false)}
+        />
+      )} */}
 
           {/* Shop Hover Section */}
 

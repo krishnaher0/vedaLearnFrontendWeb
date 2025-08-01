@@ -94,13 +94,7 @@ const handleForgotPassword = () => {
           Login
         </button>
 
-        <button
         
-          type="submit"
-          className="w-full border border-gray-300 py-2 rounded-full flex items-center justify-center gap-2">
-          <span>Login With Google</span>
-          <span className="text-xs">ⓖ</span>
-        </button>
       </form>
       <div className="h-10"></div>
        <button

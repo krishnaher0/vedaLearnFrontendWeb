@@ -6,9 +6,9 @@ import { AuthContext } from "../../auth/AuthProvider";
 import useLoginTeacher from "../../hooks/useLoginTeacher";
 
 const TeacherLoginForm = () => {
-  
   const { isAuthenticated, role } = useContext(AuthContext);
-  const { mutate, error, data, isPending, isError, isSuccess } = useLoginTeacher();
+  const { mutate, error, data, isPending, isError, isSuccess } =
+    useLoginTeacher();
   const validationSchema = Yup.object({
     email: Yup.string().email("invalid email").required("Email is required"),
     password: Yup.string()
@@ -32,12 +32,9 @@ const TeacherLoginForm = () => {
     navigate("/register");
   };
 
-  
-
-const handleForgotPassword = () => {
-  navigate("/request-reset-password");
-};
-  
+  const handleForgotPassword = () => {
+    navigate("/request-reset-password");
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full md:w-1/2 min-h-screen px-10 bg-white">
@@ -93,22 +90,13 @@ const handleForgotPassword = () => {
           className="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition text-1.5xl">
           Login
         </button>
-
-        <button
-        
-          type="submit"
-          className="w-full border border-gray-300 py-2 rounded-full flex items-center justify-center gap-2">
-          <span>Login With Google</span>
-          <span className="text-xs">ⓖ</span>
-        </button>
       </form>
       <div className="h-10"></div>
-       <button
-    onClick={handleForgotPassword}
-    className="text-blue-400 hover:underline"
-  >
-    Forgot Password
-  </button>
+      <button
+        onClick={handleForgotPassword}
+        className="text-blue-400 hover:underline">
+        Forgot Password
+      </button>
       <div>
         Don't have an account?{" "}
         <button onClick={handleregister} className="text-blue-400 ">

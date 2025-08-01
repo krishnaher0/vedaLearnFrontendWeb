@@ -1,35 +1,32 @@
-import React, { useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import React,{ useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const PaymentSuccess = () => {
-  // const [searchParams] = useSearchParams();
-  // const navigate = useNavigate();
+export default function PaymentSuccess() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   const pid = searchParams.get("pid");
-  //   const amt = searchParams.get("amt");
-  //   const userId = searchParams.get("userId");
-  //   const plan = searchParams.get("plan");
-  //   const refId = searchParams.get("refId") || "some-ref-id"; // You might get this from somewhere else
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const status = queryParams.get("status");
 
-  //   // Call backend to verify payment
-  //   axios
-  //     .get("/api/payment/payment-success", {
-  //       params: { amt, oid: pid, refId, userId, plan },
-  //     })
-  //     .then((res) => {
-  //       alert(res.data.message);
-  //       // Redirect or update UI accordingly
-  //       navigate("/");
-  //     })
-  //     .catch((err) => {
-  //       alert("Payment verification failed.");
-  //       navigate("/");
-  //     });
-  // }, [searchParams, navigate]);
+    if (status === "success") {
+      toast.success("✅ Payment successful!");
+    } else {
+      toast.success("✅ Payment successful!");
+    }
 
-  return <h1>Payment Succeed</h1>;
-};
+    // Navigate to login after 2 seconds
+    const timeout = setTimeout(() => {
+      navigate("/login");
+    }, 2000);
 
-export default PaymentSuccess;
+    return () => clearTimeout(timeout);
+  }, [location, navigate]);
+
+  return (
+    <div className="text-center mt-20 text-xl text-green-600">
+      Processing your payment...
+    </div>
+  );
+}
